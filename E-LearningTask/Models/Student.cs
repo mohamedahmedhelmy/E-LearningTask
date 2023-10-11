@@ -11,6 +11,7 @@ namespace E_LearningTask.Models
         public int StudentId { get; set; }
         public string StudentName { get; set; } = null!;
         public bool IsEnrolled { get; set; }
-        public ICollection<StudentCourse> Courses { get; set; }
+        
+        public ICollection<StudentCourse>? Courses { get; set; }
     }
 }

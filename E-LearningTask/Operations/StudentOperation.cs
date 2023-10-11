@@ -1,4 +1,6 @@
-﻿using E_LearningTask.Models;
+﻿using E_LearningTask.Data;
+using E_LearningTask.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,39 +11,21 @@ namespace E_LearningTask.Operations
 {
     public class StudentOperation : IGenericOperation<Student>
     {
-        List<Student> students = new List<Student>()
+        ApplicationDbContext _context;
+        public StudentOperation(ApplicationDbContext context)
         {
-            new Student()
-            {
-                StudentId=1,
-                StudentName="Khaled",
-                Courses=new List<StudentCourse>(){ new StudentCourse() { StudentId=1,CourseId=2} },
-                IsEnrolled=true
-            },
-            new Student()
-            {
-                StudentId=2,
-                StudentName="Khaled",
-                Courses=new List<StudentCourse>(){ new StudentCourse() { StudentId=2,CourseId=1} },
-                IsEnrolled=true
-            },
-            new Student()
-            {
-                StudentId=3,
-                StudentName="Khaled",
-                Courses=new List<StudentCourse>(){ new StudentCourse() { StudentId=3,CourseId=2} },
-                IsEnrolled=true
-            },
+            _context = context;
+        }
 
-        };
         public void Add(Student item)
         {
-            students.Add(item);
+            _context.Students.Add(item);
+            _context.SaveChanges();
         }
 
         public List<Student> GetAll()
         {
-            return students;
+            return _context.Students.Include(c=>c.Courses).ToList();
         }
 
     }

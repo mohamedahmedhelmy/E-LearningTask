@@ -14,6 +14,9 @@ namespace E_LearningTask.Models
         public string Duration { get; set; } = null!;
         public decimal Price { get; set; }
         public int InstructorId { get; set; }
-        public List<FeedBackCourse>? FeedBackCourse { get; set; }
+        [ForeignKey(nameof(InstructorId))]
+        public Instructor? Instructor { get; set; }
+        public ICollection<StudentCourse>? Students { get; set; }
+        public ICollection<FeedBackCourse>? FeedBackCourse { get; set; } 
     }
 }

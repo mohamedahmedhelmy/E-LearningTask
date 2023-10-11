@@ -1,24 +1,26 @@
-﻿using E_LearningTask.Enums;
+﻿using E_LearningTask.Data;
+using E_LearningTask.Enums;
 using E_LearningTask.Models;
 
 namespace E_LearningTask.Operations
 {
     internal class InstructorOperation : IGenericOperation<Instructor>
     {
-        List<Instructor> instructors =new List<Instructor>()
+        ApplicationDbContext _context;
+        public InstructorOperation(ApplicationDbContext context)
         {
-            new Instructor(){InstructorId=1,InstructorName="Mohamed", employeeType=EmployeeType.PerCourse},
-            new Instructor(){InstructorId=2,InstructorName="Ahmed", employeeType=EmployeeType.FullTime},
-            new Instructor(){InstructorId=3,InstructorName="Helmy", employeeType=EmployeeType.PerCourse}
-        };
+            _context = context;
+        }
+
         public void Add(Instructor item)
         {
-           instructors.Add(item);
+            _context.Instructors.Add(item);
+            _context.SaveChanges();
         }
 
         public List<Instructor> GetAll()
         {
-           return instructors;
+           return _context.Instructors.ToList();
         }
 
 
